@@ -1,0 +1,54 @@
+﻿@model MVC_Watch_UI.ViewModels.AddProductDiscountViewModel
+<div class="container">
+    <h3 class="text-primary">New Discount</h3>
+    <hr />
+    <form method="post" asp-action="Create" class="mt-3">
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="@Model.ProductDiscount.ProductID"></label>
+                <select asp-for="@Model.ProductDiscount.ProductID" asp-items="@Model.ProductList" class="form-select">
+                    <option disabled selected>--Select Product--</option>
+                </select>
+                <span asp-validation-for="@Model.ProductDiscount.ProductID" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="@Model.ProductDiscount.Percentage">Percentage</label>
+                <input type="number" asp-for="@Model.ProductDiscount.Percentage" class="form-control">
+                <span asp-validation-for="@Model.ProductDiscount.Percentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary my-3">OK</button>
+        <a asp-controller="ProductDiscount" asp-action="Index" class="btn btn-secondary my-3">
+            Back
+        </a>
+    </form>
+</div>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+    <script>
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+
+        //function ValidateInput() {
+        //    if (document.getElementById("uploadBox").value == "") {
+        //        Swal.fire({
+        //            icon: 'error',
+        //            title: 'Oops...',
+        //            text: 'Please upload an Image!',
+
+        //        });
+        //        return false;
+
+        //    } return true;
+        //}
+    </script>
+}
+

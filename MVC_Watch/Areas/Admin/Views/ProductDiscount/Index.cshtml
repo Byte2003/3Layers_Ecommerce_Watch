@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MVC_Watch_Business.DTO.ProductDiscountDTO.ProductDiscountDTO>
+<div class="container">
+    <h3 class="text-primary">Manage Product Discount</h3>
+    <hr />
+    <div class="d-flex w-100 my-5 justify-content-end">
+        <a class="btn btn-success mx-2" asp-controller="ProductDiscount" asp-action="Create">
+            <i class="bi bi-plus-circle-dotted"></i> Add new discount
+        </a>
+    </div>
+
+    <table id="discountTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Percentage</th>
+                <th></th>
+            </tr>
+        </thead>       
+    </table>
+    <div class="d-flex w-100 my-5 justify-content-start">
+        <a class="btn btn-outline-success mx-2 error-actions" asp-area="Customer" asp-controller="Home" asp-action="Index">
+            <i class="bi bi-plus-circle-dotted"></i> Back to Home
+        </a>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/discount.js"></script>
+}
+

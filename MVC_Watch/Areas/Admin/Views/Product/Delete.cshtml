@@ -1,0 +1,72 @@
+﻿@model MVC_Watch_Business.DTO.ProductDTO.ProductDTO
+<div class="container">
+    <h3 class="text-primary">Delete Product</h3>
+    <hr />
+    <form class="row g-3" asp-action="Delete" method="post">
+        <input asp-for="@Model.ProductID" hidden />
+        <div class="col-md-6">
+            <label asp-for="@Model.Name" class="form-label">Name</label>
+            <input type="text" asp-for="@Model.Name" class="form-control" readonly>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="@Model.Price" class="form-label">Price</label>
+            <input type="text" asp-for="@Model.Price" class="form-control" id="inputPassword4">
+            <span asp-validation-for="@Model.Price" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <label asp-for="@Model.Description" class="form-label">Description</label>
+            <textarea asp-for="@Model.Description" rows="1" class="form-control"> </textarea>
+        </div>
+        @*<div class="col-12">
+            <label asp-for="@Model.ImageUrl">Image</label>
+            <input type="file" id="uploadBox" name="file" asp-for="@Model.ImageUrl" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="@Model.CategoryID"></label>
+            <select asp-for="@Model.CategoryID" asp-items="@Model.CategoryList" class="form-select">
+                <option disabled selected>--Select Category--</option>
+            </select>
+            <span asp-validation-for="@Model.Product.CategoryID" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="@Model.Product.BrandID"></label>
+            <select asp-for="@Model.Product.BrandID" asp-items="@Model.BrandList" class="form-select">
+                <option disabled selected>--Select Brand--</option>
+            </select>
+            <span asp-validation-for="@Model.Product.BrandID" class="text-danger"></span>
+        </div>
+        *@
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Delete</button>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-outline-primary">Back to Product list</a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+    <script>
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+
+        //function ValidateInput() {
+        //    if (document.getElementById("uploadBox").value == "") {
+        //        Swal.fire({
+        //            icon: 'error',
+        //            title: 'Oops...',
+        //            text: 'Please upload an Image!',
+
+        //        });
+        //        return false;
+
+        //    } return true;
+        //}
+    </script>
+}
+

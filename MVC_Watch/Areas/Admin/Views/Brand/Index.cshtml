@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MVC_Watch_Business.DTO.BrandDTO.BrandDTO>
+<div class="container">
+    <h3 class="text-primary">Manage Brand</h3>
+    <hr />
+    <div class="d-flex w-100 my-5 justify-content-end">
+        <a class="btn btn-success mx-2" asp-controller="Brand" asp-action="Create">
+            Add new Brand
+        </a>
+    </div>
+
+    <table id="brandTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var brand in Model)
+            {
+                <tr>
+                    <td>@brand.BrandID</td>
+                    <td>@brand.BrandName</td>
+                    <td>@Html.Raw(brand.BrandDescription)</td>
+                    <td style="width:10%;">
+                        <img src="@brand.BrandImageUrl" alt="Brand Image" class="img-fluid" />
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a asp-area="Admin" asp-controller="Brand" asp-action="Edit" asp-route-brand_id="@brand.BrandID" class="btn btn-primary mx-2">Update</a>
+                            <a class="btn btn-danger mx-2" asp-area="Admin" asp-controller="Brand" asp-action="Delete" asp-route-brand_id="@brand.BrandID">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-flex w-100 my-5 justify-content-start error-actions">
+        <a class="btn btn-outline-success mx-2" asp-area="Customer" asp-controller="Home" asp-action="Index">
+            <i class="bi bi-plus-circle-dotted"></i> Back to Home
+        </a>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#brandTable').DataTable();
+        });
+    </script>
+}

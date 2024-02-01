@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
+@inject SignInManager<MVC_Watch_Data.Models.AppUser> SignInManager
+@inject UserManager<MVC_Watch_Data.Models.AppUser> UserManager
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var isLogged = HttpContextAccessor.HttpContext.Session.GetString("isAuthen");
+    var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+
+}
+<ul class="navbar-nav">
+    @*@if (SignInManager.IsSignedIn(User))*@
+    @if (!string.IsNullOrEmpty(isLogged) && isLogged == "OK")
+    {
+        <li class="nav-item">
+            <a id="manage" class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @userName</a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="Admin" asp-controller="Auth" asp-action="Logout" class="dropdown-item text-primary">Logout</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a asp-area="Admin" asp-controller="Auth" asp-action="Register" class="dropdown-item text-primary">Register</a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="Admin" asp-controller="Auth" asp-action="Login" class="dropdown-item text-primary">Login</a>
+        </li>
+    }
+</ul>
+
