@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MVC_Watch_Business\MVC_Watch_Business.csproj" />
-    <ProjectReference Include="..\..\MVC_Watch_Data\MVC_Watch_Data.csproj" />
+    <!--<ProjectReference Include="..\..\MVC_Watch_Business\MVC_Watch_Business.csproj" />
+    <ProjectReference Include="..\..\MVC_Watch_Data\MVC_Watch_Data.csproj" />-->
     <ProjectReference Include="..\MVC_Watch_Business\MVC_Watch_Business.csproj" />
     <ProjectReference Include="..\MVC_Watch_Data\MVC_Watch_Data.csproj" />
   </ItemGroup>

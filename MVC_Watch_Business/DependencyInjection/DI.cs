@@ -55,9 +55,9 @@ namespace MVC_Watch_Business.DependencyInjection
 			service.AddScoped<AuthService>();
 			service.ConfigureApplicationCookie(option =>
 			{
-				option.LoginPath = $"/Identity/Account/Login";
-				option.LogoutPath = $"/Identity/Account/Logout";
-				option.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+				option.LoginPath = $"/Authentication/Auth/Login";
+				option.LogoutPath = $"/Authentication/Auth/Logout";
+				option.AccessDeniedPath = $"/Authentication/Auth/AccessDenied";
 			});
 			service.AddDistributedMemoryCache();
 			service.AddSession(config => {                    
