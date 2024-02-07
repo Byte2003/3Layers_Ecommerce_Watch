@@ -8,6 +8,7 @@ using MVC_Watch_Business.DTO.AppUserDTO;
 using MVC_Watch_Business.DTO.BrandDTO;
 using MVC_Watch_Business.DTO.CartItemDTO;
 using MVC_Watch_Business.DTO.CategoryDTO;
+using MVC_Watch_Business.DTO.OrderHeaderDTO;
 using MVC_Watch_Business.DTO.ProductDiscountDTO;
 using MVC_Watch_Business.DTO.ProductDTO;
 using MVC_Watch_Business.DTO.StockDTO;
@@ -37,6 +38,7 @@ namespace MVC_Watch_UI.Mappings
 			CreateMap<ProductDiscount,AddProductDiscountDTO>().ReverseMap();
 			CreateMap<ProductDiscount,UpdateProductDiscountDTO>().ReverseMap();
 			CreateMap<ProductDiscountDTO,UpdateProductDiscountDTO>().ReverseMap();
+			CreateMap<OrderHeader, OrderHeaderDTO>().ReverseMap();
 			CreateMap<Stock,StockDTO>().ReverseMap();
 			CreateMap<Stock,AddStockDTO>().ReverseMap();
 			CreateMap<Stock,UpdateStockDTO>().ReverseMap();

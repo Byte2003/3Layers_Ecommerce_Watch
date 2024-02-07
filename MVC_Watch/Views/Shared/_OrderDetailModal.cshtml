@@ -1,0 +1,41 @@
+﻿@using MVC_Watch_Data.Models
+@model IEnumerable<OrderDetail>
+
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Order Detail</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-start">
+
+    <div class="row mb-3 p-1">
+        <div class="col-3">
+            <strong>Product Name</strong>
+        </div>
+        <div class="col-3">
+            <strong>Price</strong>
+        </div>
+        <div class="col-3">
+            <strong>Quantity</strong>
+        </div>
+    </div>
+    @foreach (var detail in Model)
+    {
+
+        <div class="row mb-3 p-1">
+            <div class="col-3">
+                @detail.Product.Name
+            </div>
+            <div class="col-3">
+                @detail.Price
+            </div>
+            <div class="col-3">
+                @detail.Quantity
+            </div>
+        </div>
+
+    }
+</div>
+<div class="mb-2 mx-2">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>

@@ -1,0 +1,83 @@
+﻿@using MVC_Watch_Business.DTO.OrderHeaderDTO
+@model IEnumerable<OrderHeaderDTO>
+
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Your Orders</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="">Home</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Your Orders</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="container pt-5">
+        <div class="row px-xl-5">
+
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Order Date</th>
+                        <th>Address</th>
+                        <th>Total</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                    @foreach (var header in Model)
+                    {
+                        <tr class="cart-item">
+                            <td class="align-middle">@header.Name</td>
+                            <td class="align-middle">@header.OrderDate</td>
+                            <td class="align-middle">@header.Address, @header.City</td>
+                            <td class="align-middle">@header.OrderTotal</td>
+                            <td class="align-middle">
+
+                                @* <a class="btn btn-primary" asp-area="Customer" asp-controller="OrderDetail" asp-action="Index" asp-route-header_id="@header.OrderHeaderId">View Detail</a> *@
+                                <button type="button" class="btn btn-primary mx-2 detailBtn" data-header-id="@header.OrderHeaderId">
+                                    View Detail
+                                </button>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @* modal to display Order Detail *@
+    <div class="modal fade" id="orderDetailModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('.detailBtn').on('click', function () {
+                var header_id = $(this).data('header-id');
+                $.ajax({
+                    url: '/Customer/OrderHeader/GetOrderDetails',
+                    method: 'GET',
+                    data: { headerId: header_id },
+                    success: function (data) {
+                        console.log(data);
+                        $('#orderDetailModel .modal-content').html(data);
+                        $('#orderDetailModel').modal('show');
+                    }
+                });
+            });
+        });
+
+    </script>
+}

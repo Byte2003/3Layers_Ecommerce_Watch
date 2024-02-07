@@ -53,6 +53,8 @@ namespace MVC_Watch_Business.DependencyInjection
 			service.AddScoped<CartItemService>();
 			service.AddScoped<DbInitialize>();
 			service.AddScoped<AuthService>();
+			service.AddScoped<PaymentService>();
+			service.AddScoped<OrderHeaderService>();
 			service.ConfigureApplicationCookie(option =>
 			{
 				option.LoginPath = $"/Authentication/Auth/Login";
