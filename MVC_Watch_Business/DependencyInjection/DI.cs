@@ -22,11 +22,21 @@ namespace MVC_Watch_Business.DependencyInjection
 	public class DI
 	{
         public void ConfigureServices(IServiceCollection service)
-		{		
-			var configBuilder = new ConfigurationBuilder()
-					   .SetBasePath(Directory.GetCurrentDirectory())      
-					   .AddJsonFile("appsettings.json");
-
+		{
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+			IConfigurationBuilder configBuilder = null;
+			if (environmentName == "Development")
+			{
+                 configBuilder = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json");
+            } else
+			{
+                 configBuilder = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.Production.json");
+            }
+            
 			var configurationroot = configBuilder.Build();
 			// Add services to the container.
 			service.AddControllers().AddJsonOptions(x =>
