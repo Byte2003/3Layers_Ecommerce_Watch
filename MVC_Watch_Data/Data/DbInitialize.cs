@@ -18,8 +18,19 @@ namespace MVC_Watch_Data.Data
 			_db = db;
 		}
 		public async Task SeedAdminAccount()
-		{			
-			var user = new AppUser
+		{
+            try
+            {
+                if (_db.Database.GetPendingMigrations().Count() > 0)
+                {
+                    _db.Database.Migrate();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            var user = new AppUser
 			{
 				UserName = "byte050403@gmail.com",
 				NormalizedUserName = "byte050403@gmail.com".ToUpper(),
