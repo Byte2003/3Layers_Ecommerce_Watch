@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MVC_Watch_Business.DTO.OrderDetailDTO;
+using MVC_Watch_Business.DTO.ProductDTO;
 using MVC_Watch_Business.Services;
 using MVC_Watch_Data.Contracts;
 using MVC_Watch_Data.Models;
@@ -38,8 +40,7 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
         {
             Guid header_Id = Guid.Parse(headerId);
             var details = await _orderDetailService.GetAllAsync(u => u.OrderHeaderID == header_Id, includeProperties: nameof(Product));
-
-            return PartialView("_OrderDetailModal", details);
+            return PartialView("_OrderDetailModal", _mapper.Map<IEnumerable<OrderDetail>>(details));
 
         }
     }
