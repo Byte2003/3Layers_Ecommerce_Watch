@@ -55,8 +55,10 @@ namespace MVC_Watch_Business.Services
 			{
 				var cartDomain = _mapper.Map<CartItem>(cart);
 				_unitOfWork.CartItem.Add(cartDomain);
-			}
-			catch (Exception)
+                _unitOfWork.Save();
+
+            }
+            catch (Exception)
 			{
 
 				throw;
@@ -68,6 +70,7 @@ namespace MVC_Watch_Business.Services
 			{
 				var cartDomain = _mapper.Map<CartItem>(cart);
 				_unitOfWork.CartItem.Update(cartDomain);
+				_unitOfWork.Save();
 			}
 			catch (Exception)
 			{
@@ -81,6 +84,7 @@ namespace MVC_Watch_Business.Services
 			{
 				var cartDomain = _mapper.Map<CartItem>(cart);
 				_unitOfWork.CartItem.Delete(cartDomain);
+				_unitOfWork.Save();
 			}
 			catch (Exception)
 			{
@@ -93,19 +97,22 @@ namespace MVC_Watch_Business.Services
 			var cartDomain = await _unitOfWork.CartItem.GetFirstOrDefaultAsync( i => i.CartItemID == cartID );
 			cartDomain.Quantity += quantity;
 			_unitOfWork.CartItem.Update(cartDomain); // EF Core tracking are set to false in Program.cs
-		}
-		public async Task DecreaseQuantity(Guid cartID, int quantity)
+            _unitOfWork.Save();
+        }
+        public async Task DecreaseQuantity(Guid cartID, int quantity)
 		{
 			var cartDomain = await _unitOfWork.CartItem.GetFirstOrDefaultAsync(u => u.CartItemID == cartID);
 			cartDomain.Quantity -= quantity;
 			_unitOfWork.CartItem.Update(cartDomain); // EF Core tracking are set to false in Program.cs
-		}
+            _unitOfWork.Save();
+        }
 		public async Task UpdateQuantity(Guid cartID,int quantity)
 		{
 			var cartDomain = await _unitOfWork.CartItem.GetFirstOrDefaultAsync(u => u.CartItemID == cartID);
 			cartDomain.Quantity = quantity;
 			_unitOfWork.CartItem.Update(cartDomain); // EF Core tracking are set to false in Program.cs
+            _unitOfWork.Save();
 
-		}
+        }
 	}
 }

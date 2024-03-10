@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -26,6 +27,7 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
+			await HttpContext.SignOutAsync();
 			var productsDomain = await _productService.GetAllProductsAsync(includeProperties: "ProductDiscount");
 			var products = _mapper.Map<IEnumerable<ProductDTO>>(productsDomain);
 			return View(products);

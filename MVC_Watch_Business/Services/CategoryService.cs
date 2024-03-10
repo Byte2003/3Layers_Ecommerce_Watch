@@ -55,6 +55,7 @@ namespace MVC_Watch_Business.Services
             {
                 var categoryDomain = _mapper.Map<Category>(category);
                 _unitOfWork.Category.Add(categoryDomain);
+                _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -69,6 +70,7 @@ namespace MVC_Watch_Business.Services
             {
                 var categoryDomain = _mapper.Map<Category>(category);
                 _unitOfWork.Category.Update(categoryDomain);
+                _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -83,6 +85,7 @@ namespace MVC_Watch_Business.Services
             {
                 var categoryDomain = _mapper.Map<Category>(category);
                 _unitOfWork.Category.Delete(categoryDomain);
+                _unitOfWork.Save();
             }
             catch (Exception)
             {

@@ -55,7 +55,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var productDiscountDomain = _mapper.Map<ProductDiscount>(productDiscount);
 				_unitOfWork.ProductDiscount.Add(productDiscountDomain);
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 
@@ -68,7 +69,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var productDiscountDomain = _mapper.Map<ProductDiscount>(productDiscount);
 				_unitOfWork.ProductDiscount.Update(productDiscountDomain);
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 
@@ -81,7 +83,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var productDiscountDomain = _mapper.Map<ProductDiscount>(productDiscount);
 				_unitOfWork.ProductDiscount.Delete(productDiscountDomain);
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 

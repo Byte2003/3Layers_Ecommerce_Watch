@@ -14,14 +14,14 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
     {
 
         private readonly OrderHeaderService _orderHeaderService;
+        private readonly OrderDetailService _orderDetailService;
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public OrderHeaderController(OrderHeaderService orderHeaderService, IMapper mapper, IUnitOfWork unitOfWork)
+        public OrderHeaderController(OrderHeaderService orderHeaderService, IMapper mapper, OrderDetailService orderDetailService)
         {
             _orderHeaderService = orderHeaderService;
             _mapper = mapper;
-            _unitOfWork = unitOfWork;
+            _orderDetailService = orderDetailService;
         }
         public async Task<IActionResult> Index()
         {
@@ -37,7 +37,7 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
         public async Task<IActionResult> GetOrderDetails(string headerId)
         {
             Guid header_Id = Guid.Parse(headerId);
-            var details = await _unitOfWork.OrderDetail.GetAllAsync(u => u.OrderHeaderID == header_Id, includeProperties: nameof(Product));
+            var details = await _orderDetailService.GetAllAsync(u => u.OrderHeaderID == header_Id, includeProperties: nameof(Product));
 
             return PartialView("_OrderDetailModal", details);
 

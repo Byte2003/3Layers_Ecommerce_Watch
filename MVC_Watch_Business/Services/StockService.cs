@@ -56,7 +56,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var stockDomain = _mapper.Map<Stock>(stock);
 				_unitOfWork.Stock.Add(stockDomain);
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 
@@ -69,7 +70,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var stockDomain = _mapper.Map<Stock>(stock);
 				_unitOfWork.Stock.Update(stockDomain);
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 
@@ -82,7 +84,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var stockDomain = _mapper.Map<Stock>(stock);
 				_unitOfWork.Stock.Delete(stockDomain);
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 
@@ -95,7 +98,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var stock = await _unitOfWork.Stock.GetFirstOrDefaultAsync(u => u.ProductID == product_id);
 				stock.Quantity += number;
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 
@@ -108,7 +112,8 @@ namespace MVC_Watch_Business.Services
 			{
 				var stock = await _unitOfWork.Stock.GetFirstOrDefaultAsync(u => u.ProductID == product_id);
 				stock.Quantity -= number;
-			}
+                _unitOfWork.Save();
+            }
 			catch (Exception)
 			{
 

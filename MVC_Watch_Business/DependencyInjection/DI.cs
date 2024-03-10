@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MVC_Watch_Business.DTO.AppUserDTO;
 using MVC_Watch_Business.Services;
 using MVC_Watch_Data.Contracts;
 using MVC_Watch_Data.Data;
@@ -55,18 +56,20 @@ namespace MVC_Watch_Business.DependencyInjection
 			service.AddScoped<AuthService>();
 			service.AddScoped<PaymentService>();
 			service.AddScoped<OrderHeaderService>();
-			service.ConfigureApplicationCookie(option =>
+			service.AddScoped<OrderDetailService>();
+            service.ConfigureApplicationCookie(option =>
 			{
 				option.LoginPath = $"/Authentication/Auth/Login";
 				option.LogoutPath = $"/Authentication/Auth/Logout";
 				option.AccessDeniedPath = $"/Authentication/Auth/AccessDenied";
 			});
+
 			service.AddDistributedMemoryCache();
-			service.AddSession(config => {                    
-				config.Cookie.Name = "MVC_Watch";             
-				config.IdleTimeout = new TimeSpan(0, 30, 0);    
-			});
-			service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            service.AddSession(config => {
+                config.Cookie.Name = "MVC_Watch";
+                config.IdleTimeout = new TimeSpan(0, 30, 0);
+            });
+            service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 		}
 	}

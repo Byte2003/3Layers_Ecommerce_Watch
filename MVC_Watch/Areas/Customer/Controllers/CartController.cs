@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC_Watch_Business.DTO.CartItemDTO;
 using MVC_Watch_Business.Services;
-using MVC_Watch_Data.Contracts;
 using MVC_Watch_UI.ViewModels;
 using System.Security.Claims;
 
@@ -13,17 +12,15 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
 	[Authorize]
 	public class CartController : Controller
 	{
-		private readonly IUnitOfWork _unitOfWork;
 		private readonly CartItemService _cartItemService;
 		private readonly ProductService _productService;
 		private readonly IMapper _mapper;
 		[BindProperty]
 		public ShoppingCartViewModel ShoppingCartViewModel { get; set; }
 		public static double OrderTotal { get; set; }
-		public CartController(IUnitOfWork unitOfWork, CartItemService cartItemService, IMapper mapper, ProductService productService)
+		public CartController(CartItemService cartItemService, IMapper mapper, ProductService productService)
 		{
 			_cartItemService = cartItemService;
-			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 			_productService = productService;
 		}
@@ -50,7 +47,6 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
 			{
 				await _cartItemService.IncreaseQuantity(cart.CartItemID, 1);
 			}
-			_unitOfWork.Save();
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> Index()
@@ -97,7 +93,6 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
 			var cart = await _cartItemService.GetCartItemAsync(u => u.CartItemID == cart_id);
 			var newPrice = await _productService.GetCurrentPriceOfProduct(cart.ProductID) * quantity;
 			cart.Price = newPrice;
-			_unitOfWork.Save();	
 			var orderTotal = await GetOrderTotal();
 			return Json(new { success = true, message = "Update successfully", price = newPrice, total = orderTotal });
 		}
@@ -106,7 +101,6 @@ namespace MVC_Watch_UI.Areas.Customer.Controllers
 		{
 			var cart = await _cartItemService.GetCartItemAsync(i => i.CartItemID == cart_id);
 			_cartItemService.DeleteCart(cart);
-			_unitOfWork.Save();
 			return Json(new { success = true, message = "Delete successfully" });
 		}
 		#endregion

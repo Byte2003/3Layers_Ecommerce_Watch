@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using MVC_Watch_Business.DTO.AppUserDTO;
 using MVC_Watch_Business.DTO.LoginDTO;
 using MVC_Watch_Business.DTO.RegisterDTO;
 using MVC_Watch_Business.Services;
@@ -13,7 +15,7 @@ namespace MVC_Watch_UI.Areas.Authentication.Controllers
         {
             _authService = authService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
@@ -27,8 +29,6 @@ namespace MVC_Watch_UI.Areas.Authentication.Controllers
         public async Task<IActionResult> Login(LoginRequestDTO req)
         {
             await _authService.Login(req);
-            HttpContext.Session.SetString("isAuthen", "OK");
-            HttpContext.Session.SetString("UserName", $"{req.Username}");
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
         [HttpGet]
@@ -41,14 +41,12 @@ namespace MVC_Watch_UI.Areas.Authentication.Controllers
         public async Task<IActionResult> Register(RegisterRequestDTO req)
         {
             await _authService.Register(req);
-            HttpContext.Session.SetString("isAuthen", "OK");
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _authService.Logout();
-            HttpContext.Session.SetString("isAuthen", "NO");
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
         [HttpGet]

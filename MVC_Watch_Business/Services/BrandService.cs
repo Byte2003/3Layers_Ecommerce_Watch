@@ -26,7 +26,7 @@ namespace MVC_Watch_Business.Services
 			try
 			{
 				var brandsDomain = await _unitOfWork.Brand.GetAllAsync(filter);
-				var brands = _mapper.Map<IEnumerable<BrandDTO>>(brandsDomain);
+				var brands = _mapper.Map<IEnumerable<BrandDTO>>(brandsDomain);			
 				return brands;
 			}
 			catch (Exception)
@@ -50,12 +50,13 @@ namespace MVC_Watch_Business.Services
 			}
 		}
 
-		public void AddBrand(AddBrandDTO brand)
+		public async void AddBrand(AddBrandDTO brand)
 		{
 			try
 			{
 				var brandDomain = _mapper.Map<Brand>(brand);
 				_unitOfWork.Brand.Add(brandDomain);
+				_unitOfWork.Save();
 			}
 			catch (Exception)
 			{
@@ -70,6 +71,7 @@ namespace MVC_Watch_Business.Services
 			{
 				var brandDomain = _mapper.Map<Brand>(brand);
 				_unitOfWork.Brand.Update(brandDomain);
+				 _unitOfWork.Save();
 			}
 			catch (Exception)
 			{
@@ -84,8 +86,9 @@ namespace MVC_Watch_Business.Services
 			{
 				var brandDomain = _mapper.Map<Brand>(brand);
 				_unitOfWork.Brand.Delete(brandDomain);
-			}
-			catch (Exception)
+                 _unitOfWork.Save();
+            }
+            catch (Exception)
 			{
 
 				throw;
