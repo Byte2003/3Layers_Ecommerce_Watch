@@ -1,12 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using MVC_Watch_Business.Services;
-using MVC_Watch_Data.Models;
-using MVC_Watch_UI.ViewModels;
 using PayPal.Api;
-using System;
 using System.Security.Claims;
 
 namespace MVC_Watch_UI.Areas.Customer.Controllers

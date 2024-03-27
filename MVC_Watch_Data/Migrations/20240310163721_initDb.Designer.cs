@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Watch_Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231204154304_addDescriptiontoCateTable")]
-    partial class addDescriptiontoCateTable
+    [Migration("20240310163721_initDb")]
+    partial class initDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,22 @@ namespace MVC_Watch_Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d4bbab4c-df0d-4621-bf96-5520388de0da",
+                            ConcurrencyStamp = "d4bbab4c-df0d-4621-bf96-5520388de0da",
+                            Name = "customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "3f0007dd-8403-4f3a-b5f8-0616bf668d0f",
+                            ConcurrencyStamp = "3f0007dd-8403-4f3a-b5f8-0616bf668d0f",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -136,6 +152,13 @@ namespace MVC_Watch_Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e20b0397-b30f-457c-a489-6cc1297cc8cd",
+                            RoleId = "3f0007dd-8403-4f3a-b5f8-0616bf668d0f"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -165,6 +188,12 @@ namespace MVC_Watch_Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -175,6 +204,12 @@ namespace MVC_Watch_Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -199,6 +234,9 @@ namespace MVC_Watch_Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -220,6 +258,28 @@ namespace MVC_Watch_Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e20b0397-b30f-457c-a489-6cc1297cc8cd",
+                            AccessFailedCount = 0,
+                            Address = "Le Van Hien",
+                            City = "Da Nang",
+                            ConcurrencyStamp = "6cc4245f-8b49-4c2a-a7a0-f40301704151",
+                            Email = "byte050403@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Hoang",
+                            LastName = "Truong",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEB0KU89vVphHAvaui4FUfji33ODfHZJS8+6IdB9KymXM3K3rwiATNjn2xZH9cYLAwg==",
+                            PhoneNumber = "0981995925",
+                            PhoneNumberConfirmed = false,
+                            PostalCode = "12345",
+                            SecurityStamp = "f018e7e3-5bdc-4db2-889b-ed25026fd515",
+                            TwoFactorEnabled = false,
+                            UserName = "Hoang Truong"
+                        });
                 });
 
             modelBuilder.Entity("MVC_Watch_Data.Models.Brand", b =>
@@ -233,7 +293,6 @@ namespace MVC_Watch_Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BrandImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BrandName")
@@ -243,6 +302,31 @@ namespace MVC_Watch_Data.Migrations
                     b.HasKey("BrandID");
 
                     b.ToTable("Brands");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.CartItem", b =>
+                {
+                    b.Property<Guid>("CartItemID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AppUserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartItemID");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("MVC_Watch_Data.Models.Category", b =>
@@ -264,6 +348,79 @@ namespace MVC_Watch_Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("MVC_Watch_Data.Models.OrderDetail", b =>
+                {
+                    b.Property<Guid>("OrderDetailID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderHeaderID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderDetailID");
+
+                    b.HasIndex("OrderHeaderID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.OrderHeader", b =>
+                {
+                    b.Property<Guid>("OrderHeaderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AppUserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("OrderTotal")
+                        .HasColumnType("float");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ShippingDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("OrderHeaderId");
+
+                    b.HasIndex("AppUserID");
+
+                    b.ToTable("OrderHeaders");
+                });
+
             modelBuilder.Entity("MVC_Watch_Data.Models.Product", b =>
                 {
                     b.Property<Guid>("ProductID")
@@ -281,7 +438,6 @@ namespace MVC_Watch_Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -298,6 +454,46 @@ namespace MVC_Watch_Data.Migrations
                     b.HasIndex("CategoryID");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.ProductDiscount", b =>
+                {
+                    b.Property<Guid>("PDiscountID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Percentage")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PDiscountID");
+
+                    b.HasIndex("ProductID")
+                        .IsUnique();
+
+                    b.ToTable("ProductsDiscount");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.Stock", b =>
+                {
+                    b.Property<Guid>("StockID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("StockID");
+
+                    b.HasIndex("ProductID")
+                        .IsUnique();
+
+                    b.ToTable("Stocks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -351,6 +547,55 @@ namespace MVC_Watch_Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MVC_Watch_Data.Models.CartItem", b =>
+                {
+                    b.HasOne("MVC_Watch_Data.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MVC_Watch_Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.OrderDetail", b =>
+                {
+                    b.HasOne("MVC_Watch_Data.Models.OrderHeader", "OrderHeader")
+                        .WithMany()
+                        .HasForeignKey("OrderHeaderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MVC_Watch_Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderHeader");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.OrderHeader", b =>
+                {
+                    b.HasOne("MVC_Watch_Data.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("MVC_Watch_Data.Models.Product", b =>
                 {
                     b.HasOne("MVC_Watch_Data.Models.Brand", "Brand")
@@ -368,6 +613,37 @@ namespace MVC_Watch_Data.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.ProductDiscount", b =>
+                {
+                    b.HasOne("MVC_Watch_Data.Models.Product", "Product")
+                        .WithOne("ProductDiscount")
+                        .HasForeignKey("MVC_Watch_Data.Models.ProductDiscount", "ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.Stock", b =>
+                {
+                    b.HasOne("MVC_Watch_Data.Models.Product", "Product")
+                        .WithOne("Stock")
+                        .HasForeignKey("MVC_Watch_Data.Models.Stock", "ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MVC_Watch_Data.Models.Product", b =>
+                {
+                    b.Navigation("ProductDiscount")
+                        .IsRequired();
+
+                    b.Navigation("Stock")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
